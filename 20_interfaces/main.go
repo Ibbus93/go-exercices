@@ -21,6 +21,10 @@ type imac struct {
 	version float32
 }
 
+type company struct {
+	name string
+}
+
 func (phone iphone) turnOn() string {
 	return "iOS starting up..."
 }
@@ -55,4 +59,30 @@ func main() {
 
 	fmt.Println(dev1)
 	fmt.Println(dev2)
+
+	// empty interfaces
+	var a, b, c, d interface{}
+
+	a = 42
+	b = "blah"
+	c = true
+	d = company{"cloud"}
+
+	func(list ...interface{}){
+		for _, v := range list {
+			fmt.Printf("%v, %T\n", v, v)
+		}
+	}(a, b, c, d)
+
+	// type assertion
+	c1 := d.(company) // d.(type) asserts that d is of type company and is not nil, else it panics
+	fmt.Println(c1)
+
+	if c2, ok := c.(company); ok {
+		fmt.Println(c2, ok)
+	} else {
+		fmt.Printf("Expected company type, found: %T\n", c)
+	}
+
+	// n := d.(int); n++ panic
 }
